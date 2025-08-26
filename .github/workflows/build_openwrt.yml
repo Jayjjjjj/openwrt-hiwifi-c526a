@@ -51,6 +51,8 @@ jobs:
     - name: Clone source code
       working-directory: /workdir
       run: |
+        git config --global user.email "${GH_USERNAME}@users.noreply.github.com"
+        git config --global user.name "${GH_USERNAME}"
         df -hT $PWD
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
@@ -73,7 +75,7 @@ jobs:
       run: |
         cd openwrt
         ./scripts/feeds install -a 
-        
+
     - name: Load custom configuration
       run: |
         [ -e files ] && mv files openwrt/files
